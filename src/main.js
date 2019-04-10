@@ -1,8 +1,17 @@
 'use strict';
+// memory game constructor 
+function MemoryGame (cards) {
+  this.cards = cards;
+  this.pickedCards = [];
+  this.pairsGuessed = counterGuessed;
+  this.pairsClicked = counterClicked;
+};
+
 
 function main () {
-  var memoryGame = new MemoryGame(cards);
   var html = '';
+  var memoryGame = new MemoryGame(cards);
+  //applying those 3 classes to each card in memory game
   memoryGame.cards.forEach(function (pic) {
     html += '<div class="card" data-card-name="'+ pic.name +'">';
     html += '  <div class="back" name="'+ pic.img +'"></div>';
@@ -16,14 +25,28 @@ function main () {
     memoryBoard.innerHTML = html;
   }
   
+  
+    
+
   // You will need to do something to the front as well
   var front = document.querySelectorAll('.front');
+  if(front) {
+  front.innerHTML = cards.img;
+  }
+  
+  // front.addEventListener('click', function () {
+  //   front.classList.toggle('back');
+  //   })
+  
 
   // Bind the click event of each element to a function
   var back = document.querySelector('.back');
+  
   back.addEventListener('click', function () {
-    // TODO: Your code goes here!
+    back.classList.toggle('front');
+    console.log('toggle');
   });
+  
   
   
   
@@ -52,8 +75,10 @@ function main () {
   function displayClickedCard(card) {
     card.className += ' active';
     card.style.background = 'url(img/' + card.getAttribute('name') + ') no-repeat';
+    pickedCards.push(card); // added this to push active cards into pickedCardsArr 
   }
 };
+main();
 
 window.addEventListener('load', main);
 
