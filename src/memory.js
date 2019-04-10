@@ -19,6 +19,16 @@ MemoryGame.prototype.shuffleCards = function () {
   }
 };
 
+/* I tried it on this way but it didn`t work 
+let cardsRandom = [];
+  for( ; this.cards.length>0 ; 0){
+    let randomNum = Math.floor(Math.random()* this.cards.length);
+    let randomCard = this.cards.splice(randomNum, 1);
+    cardsRandom.push(randomCard);
+  }
+  cards = cardsRandom;*/
+
+
 MemoryGame.prototype.checkIfPair = function (firstCard, secondCard) {
   this.pairsClicked ++;
   if (firstCard === secondCard) {
