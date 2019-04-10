@@ -22,9 +22,10 @@ function main () {
   // Bind the click event of each element to a function
   var back = document.querySelector('.back');
   back.addEventListener('click', function () {
-    // TODO: Your code goes here!
+
+    shuffleCards();
+    checkIfPair()
   });
-  
   
   
   // Helpers to create the logic of the game
