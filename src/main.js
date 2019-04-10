@@ -1,6 +1,7 @@
 'use strict';
 
 function main () {
+  
   var memoryGame = new MemoryGame(cards);
   var html = '';
   memoryGame.cards.forEach(function (pic) {
@@ -20,10 +21,21 @@ function main () {
   var front = document.querySelectorAll('.front');
 
   // Bind the click event of each element to a function
-  var back = document.querySelector('.back');
-  back.addEventListener('click', function () {
-    // TODO: Your code goes here!
+  var back = document.querySelectorAll('.back');
+  var backArray = [...back];
+
+
+  backArray.forEach(function(cardBack){
+    cardBack.addEventListener('click', function () {
+      if(!this.className.includes('active')){
+        memoryGame.pickedCards.push(this);
+        displayClickedCard(this);
+      } 
+    
+    });
   });
+
+  
   
   
   
@@ -54,6 +66,8 @@ function main () {
     card.style.background = 'url(img/' + card.getAttribute('name') + ') no-repeat';
   }
 };
+
+main();
 
 window.addEventListener('load', main);
 
