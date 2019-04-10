@@ -1,8 +1,10 @@
 'use strict';
 
+
 function main () {
   var memoryGame = new MemoryGame(cards);
   var html = '';
+  memoryGame.shuffleCards();
   memoryGame.cards.forEach(function (pic) {
     html += '<div class="card" data-card-name="'+ pic.name +'">';
     html += '  <div class="back" name="'+ pic.img +'"></div>';
@@ -20,9 +22,29 @@ function main () {
   var front = document.querySelectorAll('.front');
 
   // Bind the click event of each element to a function
-  var back = document.querySelector('.back');
-  back.addEventListener('click', function () {
-    // TODO: Your code goes here!
+  var back = document.querySelectorAll('.back'); 
+  back.forEach((element) => {
+    element.addEventListener('click', function () {
+      // TODO: write some code here
+      if (!this.classList.contains('active')) { //when card is not active and it is clicked, it should put it into the picked Cards array and add the classname active
+        memoryGame.pickedCards.push(this);
+        displayClickedCard(this);
+
+        if(memoryGame.pickedCards.length > 1) { // when we already clicked 2 cards we shouldnt be able to click on another front or back class card
+          back.forEach((element)=>element.classList.add('blocked')); 
+          front.forEach((element)=>element.classList.add('blocked'));
+          var firstCard = memoryGame.pickedCards[0].getAttribute("name"); //firstcard is first object we clicked on (which was pushed to the index 0 of the empty array)
+          var secondCard = memoryGame.pickedCards[1].getAttribute("name");
+          if(memoryGame.checkIfPair(firstCard, secondCard)) { //if firstcard and secondcard are the same , the nextTurnfunction is called (where the array of pickedcards is set to [] and we are able to click to the next cards(by removing the blocked class))
+            prepareNextTurn();
+          } else {
+            turnBackCards();
+          }
+        }
+        printGameInfo();
+        if (memoryGame.isFinished()) { alert('You wooon!!!'); }
+      }
+    })
   });
   
   
