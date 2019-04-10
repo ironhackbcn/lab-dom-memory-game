@@ -19,11 +19,20 @@ function main() {
   // You will need to do something to the front as well
   var front = document.querySelectorAll('.front');
 
+
   // Bind the click event of each element to a function
   var back = document.querySelectorAll('.back');
-  // back.addEventListener('click', function () {
-  //   console.log("hi");
-  // });
+
+  for (var i = 0; i < back.length; i++) {
+    back[i].addEventListener('click', function () {
+      this.className = ".front";
+      console.log("hi");
+    });
+  }
+
+
+
+
 
 
 
