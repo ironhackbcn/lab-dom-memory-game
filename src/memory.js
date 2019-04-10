@@ -1,6 +1,7 @@
 var MemoryGame = function (cards) {
   
-  this.cards = cards;
+  this.cards = this.shuffleCards(cards);
+  //this.cards = cards;
   this.pickedCards = [];
   this.pairsClicked = 0;
   this.pairsGuessed = 0;
@@ -8,6 +9,9 @@ var MemoryGame = function (cards) {
 
 MemoryGame.prototype.shuffleCards = function (cards) {
 
+  if(cards === undefined){
+    return undefined;
+  }
   let shuffleCards = [];
   while(cards.length > 0){
     let randomIndex = Math.floor(Math.random() * cards.length);
@@ -15,14 +19,14 @@ MemoryGame.prototype.shuffleCards = function (cards) {
     shuffleCards.push(cardObject);
     cards.splice(randomIndex, 1);
   }
-  
+  return shuffleCards;
 };
 
 MemoryGame.prototype.checkIfPair = function (firstCard, secondCard) {
 
-  this.pairsClickedClicked++;
-  
-  if(firstCard.name === secondCard.name){
+  this.pairsClicked++;
+
+  if(firstCard === secondCard){
     this.pairsGuessed++;
     return true;
   }

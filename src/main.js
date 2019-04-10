@@ -3,6 +3,7 @@
 function main () {
   var memoryGame = new MemoryGame(cards);
   var html = '';
+
   memoryGame.cards.forEach(function (pic) {
     html += '<div class="card" data-card-name="'+ pic.name +'">';
     html += '  <div class="back" name="'+ pic.img +'"></div>';
@@ -20,10 +21,41 @@ function main () {
   var front = document.querySelectorAll('.front');
 
   // Bind the click event of each element to a function
-  var back = document.querySelector('.back');
-  back.addEventListener('click', function () {
-    // TODO: Your code goes here!
-  });
+  var back = document.querySelectorAll('.back');
+  
+  back.forEach( (element) =>{
+
+    element.addEventListener('click', function () {
+      
+      if(memoryGame.pickedCards.length < 2){  //If there is any or one card selected
+        
+        displayClickedCard(element);
+
+        memoryGame.pickedCards.push(this);
+        
+        if(memoryGame.pickedCards.length === 2){  //If i have 2 cards selected
+
+          if(memoryGame.checkIfPair(memoryGame.pickedCards[0].getAttribute('name'), memoryGame.pickedCards[1].getAttribute('name'))){
+            prepareNextTurn();
+          }
+          else{
+            turnBackCards();
+          }
+        }
+      }
+      else{ //If i'm selecting the third card.
+
+        turnBackCards();
+      }
+        printGameInfo();
+     
+      if(memoryGame.isFinished()){
+    
+        alert("YOU WON!");
+      }
+    });
+  }); 
+
   
   
   
