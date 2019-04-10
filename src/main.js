@@ -30,15 +30,18 @@ function main () {
       if(!this.className.includes('active')){
         memoryGame.pickedCards.push(this);
         displayClickedCard(this);
+        if(memoryGame.pickedCards.length > 1) {
+
+        //***********************************************//
+        // I have no idea where to go from here. 
+        // I looked at the solution code, but still feel a bit unclear 
+        // and don't want to directly copy it
+          
+        }
       } 
-    
     });
   });
 
-  
-  
-  
-  
   // Helpers to create the logic of the game
   function turnBackCards() {
     setTimeout(function () {
