@@ -1,12 +1,4 @@
 'use strict';
-// memory game constructor 
-function MemoryGame (cards) {
-  this.cards = cards;
-  this.pickedCards = [];
-  this.pairsGuessed = counterGuessed;
-  this.pairsClicked = counterClicked;
-};
-
 
 function main () {
   var html = '';
@@ -25,31 +17,35 @@ function main () {
     memoryBoard.innerHTML = html;
   }
   
+  // Bind the click event of each element to a function
+  var back = document.querySelectorAll('.back'); //querySelector returns node list so I'm spreading it into an array
+  let backArray = [...back];
+  backArray.forEach( (ele) => {
+    ele.addEventListener('click', function () {
+      this.classList.toggle('front'); // for each element in arr change the class from back to front
+      console.log('toggle');
+    });
+  })
   
-    
 
   // You will need to do something to the front as well
-  var front = document.querySelectorAll('.front');
-  if(front) {
-  front.innerHTML = cards.img;
-  }
+  var front = document.querySelectorAll('.front'); 
+  let frontArray = [...front];
+  frontArray.forEach( (ele) => { 
+    ele.addEventListener('click', function () { 
+      this.classList.toggle('back');
+      console.log('toggle');
+    });
+  })
   
-  // front.addEventListener('click', function () {
-  //   front.classList.toggle('back');
-  //   })
-  
+  let active = document.querySelectorAll('.active');
+  let activeArray = [...active];
+  activeArray.forEach( (ele) => {
+    ele.addEventListener('click', function () {
+      this.pickedCards.push(active); // pushing into the active array on each click -- needs condition that blocks from pushing if card gets clicked twice
+    });
+  })
 
-  // Bind the click event of each element to a function
-  var back = document.querySelector('.back');
-  
-  back.addEventListener('click', function () {
-    back.classList.toggle('front');
-    console.log('toggle');
-  });
-  
-  
-  
-  
   // Helpers to create the logic of the game
   function turnBackCards() {
     setTimeout(function () {
@@ -75,10 +71,10 @@ function main () {
   function displayClickedCard(card) {
     card.className += ' active';
     card.style.background = 'url(img/' + card.getAttribute('name') + ') no-repeat';
-    pickedCards.push(card); // added this to push active cards into pickedCardsArr 
   }
 };
-main();
+
+main(MemoryGame);
 
 window.addEventListener('load', main);
 
