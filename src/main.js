@@ -1,8 +1,9 @@
 'use strict';
 
 function main () {
-  var memoryGame = new MemoryGame(cards);
   var html = '';
+  var memoryGame = new MemoryGame(cards);
+  //applying those 3 classes to each card in memory game
   memoryGame.cards.forEach(function (pic) {
     html += '<div class="card" data-card-name="'+ pic.name +'">';
     html += '  <div class="back" name="'+ pic.img +'"></div>';
@@ -16,17 +17,35 @@ function main () {
     memoryBoard.innerHTML = html;
   }
   
-  // You will need to do something to the front as well
-  var front = document.querySelectorAll('.front');
-
   // Bind the click event of each element to a function
-  var back = document.querySelector('.back');
-  back.addEventListener('click', function () {
-    // TODO: Your code goes here!
-  });
+  var back = document.querySelectorAll('.back'); //querySelector returns node list so I'm spreading it into an array
+  let backArray = [...back];
+  backArray.forEach( (ele) => {
+    ele.addEventListener('click', function () {
+      this.classList.toggle('front'); // for each element in arr change the class from back to front
+      console.log('toggle');
+    });
+  })
   
+
+  // You will need to do something to the front as well
+  var front = document.querySelectorAll('.front'); 
+  let frontArray = [...front];
+  frontArray.forEach( (ele) => { 
+    ele.addEventListener('click', function () { 
+      this.classList.toggle('back');
+      console.log('toggle');
+    });
+  })
   
-  
+  let active = document.querySelectorAll('.active');
+  let activeArray = [...active];
+  activeArray.forEach( (ele) => {
+    ele.addEventListener('click', function () {
+      this.pickedCards.push(active); // pushing into the active array on each click -- needs condition that blocks from pushing if card gets clicked twice
+    });
+  })
+
   // Helpers to create the logic of the game
   function turnBackCards() {
     setTimeout(function () {
@@ -54,6 +73,8 @@ function main () {
     card.style.background = 'url(img/' + card.getAttribute('name') + ') no-repeat';
   }
 };
+
+main(MemoryGame);
 
 window.addEventListener('load', main);
 
