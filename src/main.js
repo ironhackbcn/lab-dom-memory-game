@@ -28,6 +28,7 @@ function main() {
       console.log("mirar el memory" + memoryGame.pickedCards)
 
       if (memoryGame.pickedCards.length === 2) {
+        blockedCards();
         if (memoryGame.checkIfPair(memoryGame.pickedCards[0], memoryGame.pickedCards[1])) {
           memoryGame.pickedCards = [];
         } else {
@@ -48,7 +49,6 @@ function main() {
 
   // Helpers to create the logic of the game
   function turnBackCards() {
-    removeEventLinerElement();
     setTimeout(function () {
       memoryGame.pickedCards[0].style.background = '#456783';
       memoryGame.pickedCards[1].style.background = '#456783';
@@ -58,11 +58,16 @@ function main() {
     }, 1000);
   }
 
+
+  function blockedCards() {
+    back.forEach((element) => element.classList.add('blocked'))
+    front.forEach((element) => element.classList.add('blocked'))
+  }
+
   function prepareNextTurn() {
     memoryGame.pickedCards = [];
     back.forEach((element) => element.classList.remove('blocked'))
     front.forEach((element) => element.classList.remove('blocked'))
-    removeEventLinerElement()
   }
 
   function printGameInfo() {
