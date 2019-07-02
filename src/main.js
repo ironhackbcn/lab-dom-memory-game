@@ -1,6 +1,6 @@
 'use strict';
 
-function main () {
+function main () { 
   var memoryGame = new MemoryGame(cards);
   var html = '';
   memoryGame.cards.forEach(function (pic) {
@@ -19,10 +19,25 @@ function main () {
   // You will need to do something to the front as well
   var front = document.querySelectorAll('.front');
 
+  // front.addEventListener('click', function () { console.log('clicado front');
+  //   // TODO: Your code goes here!
+  //   alert('clico en front');
+  // });
+
+  for (var i = 0; i < front.length; i++) {
+    front[i].addEventListener('click', function () {
+
+    });
+  }
+
   // Bind the click event of each element to a function
   var back = document.querySelector('.back');
   back.addEventListener('click', function () {
     // TODO: Your code goes here!
+    alert('clico en back');
+    // back.setAttribute('class','front');
+
+    displayClickedCard(cards[0]);
   });
   
   
