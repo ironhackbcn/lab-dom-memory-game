@@ -39,37 +39,38 @@ function main() {
 
   function logicOnEveryCard(e) {
     if (memoryGame.pickedCards.length === 0) {
+      console.log("aqui 1");
       memoryGame.pickedCards.push(e.target);
       displayClickedCard(e.target);
     } else if (memoryGame.pickedCards.length === 1) {
+      console.log("aqui 2");
       memoryGame.pickedCards.push(e.target);
-
       displayClickedCard(e.target);
-    }
-
-    if (
+    } else if (
       memoryGame.pickedCards.length === 2 &&
       memoryGame.checkIfPair(
         memoryGame.pickedCards[0].getAttribute("name"),
         memoryGame.pickedCards[1].getAttribute("name")
       )
     ) {
-     
-      memoryGame.pickedCards[0].classList.replace("active","blocked");
-      memoryGame.pickedCards[1].classList.add("active","blocked");
+
+      console.log ("aqui 3")
+      memoryGame.pickedCards[0].classList.replace("active", "blocked");
+      memoryGame.pickedCards[1].classList.add("active", "blocked");
       memoryGame.pickedCards = [];
 
       printGameInfo();
     } else {
+      console.log ("aqui 4")
       printGameInfo();
       turnBackCards();
     }
-    return memoryGame.pickedCards;
+    
   }
   // Helpers to create the logic of the game
   function turnBackCards() {
     setTimeout(() => {
-      memoryGame.pickedCards[0].setAttribute(
+      memoryGame.pickedCards[0].setAttribute (
         "style",
         "background-color:#456783"
       );
@@ -79,8 +80,8 @@ function main() {
       );
       memoryGame.pickedCards[0].classList.remove("active");
       memoryGame.pickedCards[1].classList.remove("active");
-      prepareNextTurn.bind(this);
-    }, 2000);
+      prepareNextTurn();
+    }, 1000);
   }
 
   function prepareNextTurn() {
