@@ -1,12 +1,39 @@
-var MemoryGame = function (cards) {
-  this.cards = cards;
-};
+class MemoryGame {
+  constructor(cards) {
+    this.cards = cards;// this.shuffleCards(JSON.parse(JSON.stringify(cards)));
+    this.pickedCards = [];
+    this.pairsClicked = 0;
+    this.pairsGuessed = 0;
+  }
 
-MemoryGame.prototype.shuffleCards = function () {
-};
+  shuffleCards(cards) {
+    if (typeof cards === "undefined") return undefined;
+    var inTheMiddle = 0;
+    var indexRandom = 0;
+    var indexCards = cards.length;
+    while (indexCards !== 0) {
+      indexRandom = Math.floor(Math.random() * indexCards);
+      indexCards--;
+      inTheMiddle = cards[indexRandom];
+      cards[indexRandom] = cards[indexCards];
+      cards[indexCards] = inTheMiddle;
+    }
 
-MemoryGame.prototype.checkIfPair = function (firstCard, secondCard) {
+    return cards;
+  }
+
+  checkIfPair(firstCard, secondCard) {
+    this.pairsClicked++;
+    if (firstCard === secondCard) {
+      console.log(firstCard,secondCard)
+      this.pairsGuessed++;
+      return true;
+    } else return false;
+  }
+
+  isFinished() {
+    
+    if (this.cards.length / 2 === this.pairsGuessed ) return true;
+    else return false;
+  }
 }
-
-MemoryGame.prototype.isFinished = function () {
-};
