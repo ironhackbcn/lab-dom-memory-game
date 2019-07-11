@@ -16,7 +16,7 @@ function main() {
       pic.img +
       ') no-repeat"></div>';
     html += "</div>";
-    win();
+    
   });
 
   // Add all the div's to the HTML
