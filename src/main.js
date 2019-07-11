@@ -3,7 +3,7 @@
 var memoryGame = new MemoryGame(cards);
 
 function main() {
-  var fistCard = undefined;
+  var firstCard = undefined;
   var lastCard = undefined;
 
   memoryGame.cards = memoryGame.shuffleCards(cards);
@@ -37,47 +37,43 @@ function main() {
     everyCard.addEventListener("click", logicOnEveryCard);
   });
 
-  function logicOnEveryCard(e) {
+  function logicOnEveryCard(SelectedCardEvent) {
     if (memoryGame.pickedCards.length === 0) {
-      console.log("aqui 1");
-      memoryGame.pickedCards.push(e.target);
-      displayClickedCard(e.target);
-    } else if (memoryGame.pickedCards.length === 1) {
-      console.log("aqui 2");
-      memoryGame.pickedCards.push(e.target);
-      displayClickedCard(e.target);
-    } else if (
-      memoryGame.pickedCards.length === 2 &&
-      memoryGame.checkIfPair(
-        memoryGame.pickedCards[0].getAttribute("name"),
-        memoryGame.pickedCards[1].getAttribute("name")
-      )
-    ) {
-
-      console.log ("aqui 3")
-      memoryGame.pickedCards[0].classList.replace("active", "blocked");
-      memoryGame.pickedCards[1].classList.add("active", "blocked");
-      memoryGame.pickedCards = [];
-
-      printGameInfo();
+      memoryGame.pickedCards.push(SelectedCardEvent.target);
+      firstCard = SelectedCardEvent.target;
+      displayClickedCard(firstCard);
+      console.log("Primera Carta Introducida");
     } else {
-      console.log ("aqui 4")
-      printGameInfo();
-      turnBackCards();
+      memoryGame.pickedCards.push(SelectedCardEvent.target);
+      lastCard = SelectedCardEvent.target;
+      displayClickedCard(lastCard);
+      console.log("Segunda Carta Introducida");
+      if (
+        memoryGame.pickedCards.length === 2 &&
+        memoryGame.checkIfPair(firstCard.getAttribute("name"), lastCard.getAttribute("name"))
+      ) {
+        console.log("Son iguales");
+        memoryGame.pickedCards[0].classList.replace("active", "blocked");
+        memoryGame.pickedCards[1].classList.replace("active", "blocked");
+        memoryGame.pickedCards = [];
+        firstCard = undefined;
+        lastCard = undefined;
+        printGameInfo();
+      } else {
+        console.log("No son Iguales");
+        printGameInfo();
+        turnBackCards();
+      }
     }
-    
+    win();
   }
   // Helpers to create the logic of the game
   function turnBackCards() {
     setTimeout(() => {
-      memoryGame.pickedCards[0].setAttribute (
-        "style",
-        "background-color:#456783"
-      );
-      memoryGame.pickedCards[1].setAttribute(
-        "style",
-        "background-color:#456783"
-      );
+      memoryGame.pickedCards[0].style.background = "#456783";
+
+      memoryGame.pickedCards[1].style.background = "#456783";
+
       memoryGame.pickedCards[0].classList.remove("active");
       memoryGame.pickedCards[1].classList.remove("active");
       prepareNextTurn();
@@ -98,6 +94,7 @@ function main() {
   }
 
   function displayClickedCard(card) {
+    console.log(card);
     card.className += " active";
     card.style.background =
       "url(img/" + card.getAttribute("name") + ") no-repeat";
